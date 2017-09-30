@@ -1,0 +1,11 @@
+
+
+
+<a href="/resources"
+
+
+<div th:each="resource : ${resources}">
+   <div>
+       <a th:href="@{/resources/edit(id=${resource.id})}" th:text="${resource.name}">name</a>
+   </div>
+</div>

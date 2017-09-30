@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Form designer</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<div class="container">
+
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+
+    <div class="row">
+
+        <div class="col-md-3">
+
+
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
+                <a class="nav-link active" id="v-pills-overview-tab" data-toggle="pill" href="#v-pills-overview" role="tab" aria-controls="v-pills-overview" aria-expanded="true">Overview</a>
+                <a class="nav-link" id="v-pills-form-tab" data-toggle="pill" href="#v-pills-form" role="tab" aria-controls="v-pills-form" aria-expanded="true">Booking Form</a>
+                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-expanded="true">Availability</a>
+                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-expanded="true">Permissions</a>
+                <a class="nav-link" id="v-pills-settingss-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-expanded="true">Email</a>
+
+            </div>
+
+        </div>
+        <div class="col-md-9">
+
+
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Resource</label>
+                <div class="col-sm-9">
+                    <select class="form-control" disabled>
+                        <option>Enabled</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">When</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Note</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary pull-right">Add new field</button>
+
+            <br clear="both">
+            <hr>
+
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-overview" role="tabpanel" aria-labelledby="v-pills-overview-tab">
+
+                    <form>
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-3 col-form-label">Resource name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="name" th:value="${resource.name}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="status" class="col-sm-3 col-form-label">Status</label>
+                            <div class="col-sm-9">
+                                <select class="form-control">
+                                    <option>Enabled</option>
+                                    <option>Disabled</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+                <!-- //overview-tab-->
+
+                <div class="tab-pane fade" id="v-pills-form" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+
+
+
+
+                       dd
+
+
+
+
+
+
+                </div>
+                <!-- //overview-form-->
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/app.js"></script>
+
+</body>
+</html>
