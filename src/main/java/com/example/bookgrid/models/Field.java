@@ -2,6 +2,7 @@ package com.example.bookgrid.models;
 
 import org.springframework.data.annotation.Id;
 
+import javax.annotation.Generated;
 import java.util.ArrayList;
 import java.util.List;
 

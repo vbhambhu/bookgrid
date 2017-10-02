@@ -34,4 +34,7 @@ public class ResourceController {
         model.addAttribute("resource", resource);
         return "resources/edit";
     }
+
+
+
 }
