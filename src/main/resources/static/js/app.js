@@ -1,8 +1,9 @@
 var app = angular.module("bookingGrid", []);
 
-
-
 app.controller("resourceDesign", function($scope, $http) {
+
+
+    $scope.newField = {};
 
     var rid = $("#resourceId").val();
     $http({
@@ -10,11 +11,38 @@ app.controller("resourceDesign", function($scope, $http) {
         method: 'POST',
         params: { rid: rid },
     }).then(function (response){
-        console.log(response.data);
+        //console.log(response.data);
         $scope.resource = response.data;
+        $scope.newField.lastAddedID = response.data.fields.length;
     },function (error){
 
     });
+
+
+    $scope.addField = function() {
+
+        $scope.newField.lastAddedID++;
+
+        var newField = {
+            "fieldId" : $scope.newField.lastAddedID,
+            "type" : $scope.newField.type,
+            "name" : $scope.newField.identifier,
+            "label" : "New field - " + $scope.newField.lastAddedID,
+            "value": null,
+            "hasError": null,
+            "errMsg": null,
+            "helpText": null,
+            "options": [],
+            "validations": []
+        };
+
+        $scope.resource.fields.push($scope.newField);
+
+        console.log("Adding new field");
+
+    }
+
+
 
     $scope.saveResource = function() {
 
