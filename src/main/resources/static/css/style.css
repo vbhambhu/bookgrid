@@ -1,3 +1,15 @@
+body {
+    padding-top: 5rem;
+}
+.starter-template {
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+
 .option-list{
+    margin-bottom: 10px;
+}
+
+.mg-bt-10{
     margin-bottom: 10px;
 }

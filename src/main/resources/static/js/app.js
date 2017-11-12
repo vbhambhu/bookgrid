@@ -1,8 +1,47 @@
 var app = angular.module("bookingGrid", []);
 
+
+app.controller("resourceList", function($scope, $http) {
+
+    $scope.createResource = function(name) {
+
+        if(name.length == 0){
+            $scope.nameErr = true;
+            return;
+        }
+
+
+        $http({
+            method: 'POST',
+            url: '/api/resource/create',
+            dataType: 'json',
+            params: {name: name},
+            headers: {
+                "Content-Type": "application/json",
+            },
+            cache: false,
+            processData: false
+        }).then(function(response) {
+            if(response.status === 200){
+                console.log('created')
+                window.location.replace("/resource/edit?id="+response.data.id);
+            }
+        });
+
+
+
+
+        console.log(name)
+    }
+
+
+
+
+});
+
+
+
 app.controller("resourceDesign", function($scope, $http) {
-
-
     $scope.newField = {};
 
     var rid = $("#resourceId").val();
@@ -51,6 +90,15 @@ app.controller("resourceDesign", function($scope, $http) {
     }
 
 
+    $scope.removeField = function(field) {
+
+        var fieldInd = $scope.resource.fields.indexOf(field);
+        $scope.resource.fields.splice(fieldInd, 1);
+        $scope.saveResource();
+
+    }
+
+
     $scope.addField = function(field) {
 
         if (typeof field.identifier == 'undefined' || field.identifier.length == 0){
@@ -64,15 +112,13 @@ app.controller("resourceDesign", function($scope, $http) {
         $scope.lastAddedID++;
 
         field.fieldId = $scope.lastAddedID;
-        field.hasError = null;
-        field.errMsg = null;
         field.helpText = null;
-        field.validations = [];
 
         $scope.resource.fields.push(field);
 
         field = {};
 
+        $scope.saveResource();
         $('#exampleModal').modal('hide')
         
 
@@ -86,7 +132,7 @@ app.controller("resourceDesign", function($scope, $http) {
 
         $http({
             method: 'POST',
-            url: '/api/saveresource',
+            url: '/api/resource/save',
             dataType: 'json',
             data: $scope.resource,
             headers: {
@@ -97,48 +143,6 @@ app.controller("resourceDesign", function($scope, $http) {
         }).then(function(response) {
             console.log(response);
         });
-
-
-       // $http.post('/api/saveresource', $scope.resource).then(successCallback, errorCallback);
-
-        // $http({
-        //     url: '/api/saveresource',
-        //     method: 'POST',
-        //
-        // }).then(function (response){
-        //     console.log(response.data);
-        //     //$scope.resource = response.data;
-        // },function (error){
-        //
-        // });
-
-        // $.ajax({
-        //     type: "POST",
-        //     url: "/api/saveresource",
-        //     dataType: 'json',
-        //     cache: false,
-        //     processData: false,
-        //     data: $scope.form,
-        //     contentType: 'application/json;charset=UTF-8',
-        //     success: function (response) {
-        //         console.log(response);
-        //     }
-        // });
-
-
-        // $.ajax({
-        //     url: '/api/saveresource',
-        //     dataType: 'json',
-        //     method: 'POST',
-        //     data: $scope.form,
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     }
-        // }).success(function(response){
-        //     $scope.response = response;
-        // }).error(function(error){
-        //     $scope.error = error;
-        // });
 
     }
 

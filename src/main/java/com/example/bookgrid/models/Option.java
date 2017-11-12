@@ -4,18 +4,17 @@ import org.springframework.data.annotation.Id;
 
 public class Option {
 
-    @Id
-    private int id;
 
+    private int order;
     private String label;
     private String value;
 
-    public int getId() {
-        return id;
+    public int getOrder() {
+        return order;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     public String getValue() {

@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title>Form designer</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="/css/style.css"/>
-</head>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
 <body>
-<div class="container" ng-app="bookingGrid" ng-controller="resourceDesign">
+<div id="page" layout:fragment="content" ng-controller="resourceDesign">
+
 
     {{resource}}
 
@@ -41,7 +36,7 @@
 
             <input type="hidden" th:value="${resource.id}" id="resourceId">
 
-            <button  ng-click="saveResource()" class="btn btn-primary">Save</button>
+            <!--<button  ng-click="saveResource()" class="btn btn-primary">Save</button>-->
 
             <hr>
 
@@ -66,17 +61,20 @@
                                     <select class="form-control form-control-sm" ng-model="newField.type" ng-init="newField.type='text'">
                                         <option value="text">Free text</option>
                                         <option value="textarea">Textarea</option>
-                                        <option value="radio">Radio Boxes</option>
-                                        <option value="check">Checkboxes</option>
+                                        <option value="radio">Radio Boxes - Single answer</option>
+                                        <option value="select">Dropdown Box - Single answer</option>
+                                        <option value="check">Checkboxes - Multiple answers</option>
                                         <option value="html">HTML content</option>
                                     </select>
                                 </div>
                             </div>
 
+                            <div ng-if="newField.type != 'html'">
+
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Label</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" ng-model="newField.lable" ng-init="newField.lable='Field label'">
+                                    <input type="text" class="form-control form-control-sm" ng-model="newField.label" ng-init="newField.label='Field label'">
                                 </div>
                             </div>
 
@@ -100,9 +98,6 @@
                             </div>
 
 
-
-
-
                             <fieldset class="form-group">
                                 <div class="row">
                                     <legend class="col-form-legend col-sm-3">Is Required?</legend>
@@ -123,7 +118,20 @@
                                 </div>
                             </fieldset>
 
-                            <div ng-if="newField.type == 'radio' || newField.type == 'check' ">
+                            </div>
+
+                            <div ng-if="newField.type == 'html'">
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">HTML content</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control form-control-sm" rows="8"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div ng-if="newField.type == 'radio' || newField.type == 'check' || newField.type == 'select' ">
                                 <hr>
                                 <h6>Options</h6>
                                 <hr>
@@ -165,35 +173,6 @@
                             </div>
 
 
-
-
-
-                            <hr>
-                            <h6>Validation rules</h6>
-                            <hr>
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Rule</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control form-control-sm" ng-model="newField.validation">
-                                        <option value="text">Date</option>
-                                        <option value="textarea">Datetime</option>
-                                        <option value="radio">Time</option>
-                                        <option value="checkbox">Year</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <button class="btn btn-primary" ng-click="addFiseld()">Add validation rules</button>
-
-
-
-
-
-
-                            {{newField}}
-
-
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -208,29 +187,84 @@
 
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Resource</label>
-                <div class="col-sm-9">
+                <div class="col-sm-5">
                     <select class="form-control" disabled>
                         <option>{{resource.name}}</option>
                     </select>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">When</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control">
+            <!--fields-->
+
+            <div class="row mg-bt-10" ng-repeat="field in resource.fields">
+                <div class="col-sm-3">
+                    <label class="form-label">{{field.label}}</label>
+                </div>
+                <div class="col-sm-5">
+
+
+                    <div ng-if="field.type == 'text'">
+                        <input type="text" class="form-control">
+                    </div>
+
+                    <div ng-if="field.type == 'textarea'">
+                        <textarea class="form-control"></textarea>
+                    </div>
+
+                    <div ng-if="field.type == 'radio'">
+
+                        <div class="form-check" ng-repeat="option in field.options">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" name="{{field.identifier}}" value="{{option.value}}">
+                                {{option.label}}
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div ng-if="field.type == 'select'">
+                        <select class="form-control">
+                            <option ng-repeat="option in field.options">{{option.label}}</option>
+                        </select>
+                    </div>
+
+                    <div ng-if="field.type == 'check'">
+
+
+                        <div class="form-check" ng-repeat="option in field.options">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="{{field.identifier}}">
+                                {{option.label}}
+                            </label>
+                        </div>
+
+
+                    </div>
+
+
+                    <div ng-if="field.type == 'html'">
+                        HTML
+                    </div>
+
+
+
+
+
+
+
+
+
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-dark btn-sm" ng-click="removeField(field)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </div>
             </div>
 
 
 
+            <!--//fields-->
 
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Note</label>
-                <div class="col-sm-9">
-                    <textarea class="form-control" rows="3"></textarea>
-                </div>
-            </div>
+
 
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add new field</button>
 
@@ -288,11 +322,6 @@
 
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-<script type="text/javascript" src="/js/app.js"></script>
-
+</div>
 </body>
 </html>

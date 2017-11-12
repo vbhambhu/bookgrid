@@ -43,30 +43,4 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String createResource(){
-
-        mongoOperation.getCollection("resources").drop();
-
-        Field field = new Field();
-        field.setLabel("Notes");
-        field.setType("textarea");
-        field.setName("note");
-        List<Field> fields = new ArrayList<>();
-        fields.add(field);
-
-
-
-
-        for (int i = 0; i < 10; i++) {
-            Resource resource = new Resource();
-            resource.setName("Resource " + i);
-            resource.setFields(fields);
-
-            System.out.println(resource.getName());
-            mongoOperation.save(resource);
-        }
-
-        return "redirect:/";
-    }
 }

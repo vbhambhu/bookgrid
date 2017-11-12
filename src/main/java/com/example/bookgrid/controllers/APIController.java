@@ -16,14 +16,23 @@ public class APIController {
     @Autowired
     ResourceRepository resourceRepository;
 
+    @ResponseBody
+    @RequestMapping(value = "api/resource/create", method = RequestMethod.POST)
+    public Resource createResource(@RequestParam(name = "name", required = true) String name){
+        Resource resource = new Resource();
+        resource.setName(name);
+        resource.setEnabled(false);
+        return resourceRepository.save(resource);
+    }
+
 
 
     @ResponseBody
-    @RequestMapping(value = "api/saveresource", method = RequestMethod.POST,
+    @RequestMapping(value = "api/resource/save", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public boolean saveResource(@RequestBody Resource resource){
 
-        System.out.println(resource.getId());
+        System.out.println(resource.getFields());
         resourceRepository.save(resource);
         return true;
     }

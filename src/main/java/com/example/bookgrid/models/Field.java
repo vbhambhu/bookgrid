@@ -8,31 +8,14 @@ import java.util.List;
 
 public class Field {
 
-    @Id
     private int fieldId;
 
     private String type;
-    private String name;
+    private String identifier;
     private String label;
     private String value;
-
-    private Boolean hasError;
-    private String errMsg;
-
     private String helpText = null;
-
     private List<Option> options = new ArrayList<>();
-
-    public Field() {}
-
-    public Field( String type, String name, String label) {
-        // this.fieldId = fieldId;
-        this.type = type;
-        this.name = name;
-        this.label = label;
-
-    }
-
 
     public int getFieldId() {
         return fieldId;
@@ -50,6 +33,14 @@ public class Field {
         this.type = type;
     }
 
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
     public String getLabel() {
         return label;
     }
@@ -58,43 +49,6 @@ public class Field {
         this.label = label;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Option> getOptions() {
-        return options;
-    }
-
-    public void setOptions(List<Option> options) {
-        this.options = options;
-    }
-
-
-    public Boolean getHasError() {
-        return hasError;
-    }
-
-    public void setHasError(Boolean hasError) {
-        this.hasError = hasError;
-    }
-
-    public String getErrMsg() {
-        return errMsg;
-    }
-
-    public void setErrMsg(String errMsg) {
-        this.errMsg = errMsg;
-    }
-
-    public void setHasErrorAndErrMsg(String errMsg, Object... args) {
-        this.setHasError(true);
-        this.errMsg = String.format(errMsg, args);
-    }
     public String getValue() {
         return value;
     }
@@ -109,5 +63,13 @@ public class Field {
 
     public void setHelpText(String helpText) {
         this.helpText = helpText;
+    }
+
+    public List<Option> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<Option> options) {
+        this.options = options;
     }
 }

@@ -13,4 +13,6 @@ public interface ResourceRepository extends MongoRepository<Resource, String> {
 
     List<Resource> findAll();
 
+
+
 }

@@ -21,17 +21,30 @@ public class ResourceController {
     @Autowired
     ResourceRepository resourceRepository;
 
-    @RequestMapping(value = "/resources", method = RequestMethod.GET)
+    @RequestMapping(value = "/resource/list", method = RequestMethod.GET)
     public String listResources(Model model){
         model.addAttribute("resources", resourceService.getAllResources());
         return "resources/list";
     }
 
-    @RequestMapping(value = "/resources/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/resource/edit", method = RequestMethod.GET)
     public String editResource(Model model,@RequestParam(value="id", required=true) String id){
         Resource resource  = resourceRepository.findById(id);
         model.addAttribute("resource", resource);
         return "resources/edit";
+    }
+
+    @RequestMapping(value = "/resource/delete", method = RequestMethod.GET)
+    public String deleteResource(Model model,@RequestParam(value="id", required=true) String id){
+        Resource resource  = resourceRepository.findById(id);
+
+        //TODO: do validation here
+        if(resource == null){
+
+        }
+
+        resourceRepository.delete(resource);
+        return "redirect:/resource/list";
     }
 
 
