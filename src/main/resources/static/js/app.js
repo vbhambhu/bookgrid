@@ -74,6 +74,7 @@ app.controller("resourceDesign", function($scope, $http) {
         field = {};
 
         $('#exampleModal').modal('hide')
+        
 
     }
 
