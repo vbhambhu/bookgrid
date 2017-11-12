@@ -13,32 +13,67 @@ app.controller("resourceDesign", function($scope, $http) {
     }).then(function (response){
         //console.log(response.data);
         $scope.resource = response.data;
-        $scope.newField.lastAddedID = response.data.fields.length;
+        $scope.lastAddedID = response.data.fields.length;
     },function (error){
 
     });
 
 
-    $scope.addField = function() {
+    $scope.removeOption = function(field, option) {
+        field.options.splice(field.options.indexOf(option), 1);
+    }
 
-        $scope.newField.lastAddedID++;
+    $scope.addOption = function(field) {
 
-        var newField = {
-            "fieldId" : $scope.newField.lastAddedID,
-            "type" : $scope.newField.type,
-            "name" : $scope.newField.identifier,
-            "label" : "New field - " + $scope.newField.lastAddedID,
-            "value": null,
-            "hasError": null,
-            "errMsg": null,
-            "helpText": null,
-            "options": [],
-            "validations": []
-        };
+        if(typeof field.option == 'undefined' || typeof field.option.value == 'undefined' || field.option.value.length == 0){
+            field.option = {};
+            field.option.valueErr = 'true';
+            return;
+        }
 
-        $scope.resource.fields.push($scope.newField);
+        if(typeof field.option.label == 'undefined' || field.option.label.length == 0){
+            field.option = {};
+            field.option.labelErr = 'true';
+            return;
+        }
 
-        console.log("Adding new field");
+        if (typeof field.options == 'undefined'){
+            field.options = [];
+            var lastOptionId = 1;
+        } else {
+            var lastOptionId = field.options.length + 1;
+        }
+
+        var option = {value: field.option.value, label: field.option.label, order: lastOptionId}
+
+        field.options.push(option);
+        field.option = {};
+    }
+
+
+    $scope.addField = function(field) {
+
+        if (typeof field.identifier == 'undefined' || field.identifier.length == 0){
+            field.hasIdentfierError = 'true';
+            return;
+        } else{
+            field.hasIdentfierError = 'false';
+        }
+
+
+        $scope.lastAddedID++;
+
+        field.fieldId = $scope.lastAddedID;
+        field.hasError = null;
+        field.errMsg = null;
+        field.helpText = null;
+        field.validations = [];
+
+        $scope.resource.fields.push(field);
+
+        field = {};
+
+        $('#exampleModal').modal('hide')
 
     }
 

@@ -23,7 +23,6 @@ public class ResourceController {
 
     @RequestMapping(value = "/resources", method = RequestMethod.GET)
     public String listResources(Model model){
-
         model.addAttribute("resources", resourceService.getAllResources());
         return "resources/list";
     }
