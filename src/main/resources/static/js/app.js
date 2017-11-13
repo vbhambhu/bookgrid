@@ -94,41 +94,100 @@ app.controller("resourceDesign", function($scope, $http) {
 
         var fieldInd = $scope.resource.fields.indexOf(field);
         $scope.resource.fields.splice(fieldInd, 1);
+
+        //re-order field ids
+        for (var i = 1; i <=  $scope.resource.fields.length; i++) {
+            var ind = i -1;
+            $scope.resource.fields[ind].fieldId = i;
+        }
+
+        $scope.lastAddedID = $scope.resource.fields.length;
+
         $scope.saveResource();
 
     }
 
 
-    $scope.addField = function(field) {
+    $scope.editField = function(field) {
 
-        if (typeof field.identifier == 'undefined' || field.identifier.length == 0){
-            field.hasIdentfierError = 'true';
+        field.edit = true;
+
+        console.log(field);
+        $scope.newField = field;
+        $('#exampleModal').modal('show');
+
+    }
+
+
+
+
+
+    $scope.saveField = function(newField) {
+
+
+        if (typeof newField.identifier == 'undefined' || newField.identifier.length < 3 || !validateAlphanumeric(newField.identifier)){
+            newField.hasIdentfierError = true;
+            newField.identifierErrMsg = 'Invalid identifier field. Minimum length 3 and alphanumeric is allowed.';
             return;
-        } else{
-            field.hasIdentfierError = 'false';
         }
 
 
-        $scope.lastAddedID++;
 
-        field.fieldId = $scope.lastAddedID;
-        field.helpText = null;
+        if(typeof newField.options == 'undefined' || newField.options.length == 0){
+            newField.isOptionErr = true;
+            newField.optionErrMsg = 'Invalid identifier field. Minimum length 3 and alphanumeric is allowed.';
+            return;
+        }
 
-        $scope.resource.fields.push(field);
 
-        field = {};
+        if(newField.edit){
 
+            console.log("editing")
+
+            var fieldInd = $scope.resource.fields.indexOf(newField);
+
+            for (var i = 0; i <  $scope.resource.fields.length; i++) {
+                if($scope.resource.fields[i].identifier == newField.identifier && $scope.resource.fields[i].fieldId != newField.fieldId){
+                    newField.hasIdentfierError = true;
+                    newField.identifierErrMsg = 'A field with same identifier already exists.';
+                    return;
+                }
+            }
+
+
+            $scope.resource.fields[fieldInd] = newField;
+
+
+        } else{
+
+
+
+            for (var i = 0; i <  $scope.resource.fields.length; i++) {
+                if($scope.resource.fields[i].identifier == newField.identifier){
+                    newField.hasIdentfierError = true;
+                    newField.identifierErrMsg = 'A field with same identifier already exists.';
+                    return;
+                }
+            }
+
+            $scope.lastAddedID++;
+            newField.fieldId = $scope.lastAddedID;
+            $scope.resource.fields.push(newField);
+        }
+
+
+
+
+        $scope.newField = {type:'text', label:'Field label'};
         $scope.saveResource();
-        $('#exampleModal').modal('hide')
-        
-
+        $('#exampleModal').modal('hide');
     }
 
 
 
     $scope.saveResource = function() {
 
-        console.log($scope.resource);
+       console.log($scope.resource);
 
         $http({
             method: 'POST',
@@ -141,7 +200,7 @@ app.controller("resourceDesign", function($scope, $http) {
             cache: false,
             processData: false
         }).then(function(response) {
-            console.log(response);
+            console.log("Saved!");
         });
 
     }
@@ -197,4 +256,16 @@ app.directive('fieldDirective', function ($http, $compile) {
 });
 
 
+function validateAlphanumeric(str) {
+    var re = /^[a-z0-9]+$/i;
+    return re.test(str);
+}
+
+function compare(a,b) {
+    if (a.last_nom < b.last_nom)
+        return -1;
+    if (a.last_nom > b.last_nom)
+        return 1;
+    return 0;
+}
 

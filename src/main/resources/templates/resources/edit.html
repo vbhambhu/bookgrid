@@ -7,13 +7,11 @@
 <div id="page" layout:fragment="content" ng-controller="resourceDesign">
 
 
-    {{resource}}
-
-    <hr>
 
 
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
+
+
+
 
 
     <div class="row">
@@ -81,9 +79,11 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Identifier</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" ng-class="newField.hasIdentfierError=='true' ? 'is-invalid' : ''" ng-model="newField.identifier">
+                                    <input type="text" class="form-control form-control-sm"
+                                           ng-class="{'is-invalid': newField.hasIdentfierError==true}"
+                                           ng-model="newField.identifier">
                                     <div class="invalid-feedback">
-                                        Identifier is required.
+                                        {{newField.identifierErrMsg}}
                                     </div>
                                 </div>
                             </div>
@@ -98,25 +98,6 @@
                             </div>
 
 
-                            <fieldset class="form-group">
-                                <div class="row">
-                                    <legend class="col-form-legend col-sm-3">Is Required?</legend>
-                                    <div class="col-sm-9">
-
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="radio" value="false" ng-model="newField.isRequired" ng-init="newField.isRequired='false'"> No
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label">
-                                                <input class="form-check-input" type="radio" value="true" ng-model="newField.isRequired"> Yes
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </fieldset>
 
                             </div>
 
@@ -136,6 +117,11 @@
                                 <h6>Options</h6>
                                 <hr>
 
+                                <div class="alert alert-danger" role="alert" ng-show="newField.isOptionErr">
+                                    Optional value is required!
+                                </div>
+
+
 
 
                                     <div class="row option-list" ng-repeat="option in newField.options">
@@ -153,13 +139,18 @@
 
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control form-control-sm" ng-class="newField.option.valueErr=='true' ? 'is-invalid' : ''" placeholder="Value" ng-model="newField.option.value"/>
+                                        <input type="text"
+                                               class="form-control form-control-sm"
+                                               ng-class="{'is-invalid': newField.option.valueErr==true}"
+                                              placeholder="Value" ng-model="newField.option.value"/>
                                         <div class="invalid-feedback">
                                             Invalid option Value.
                                         </div>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="text" class="form-control form-control-sm" ng-class="newField.option.labelErr=='true' ? 'is-invalid' : ''" placeholder="Label" ng-model="newField.option.label"/>
+                                        <input type="text" class="form-control form-control-sm"
+                                               ng-class="{'is-invalid': newField.option.labelErr==true}"
+                                               placeholder="Label" ng-model="newField.option.label"/>
                                         <div class="invalid-feedback">
                                             Invalid option Label.
                                         </div>
@@ -176,7 +167,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" ng-click="addField(newField)">Save changes</button>
+                            <button type="button" class="btn btn-primary" ng-click="saveField(newField)">Save changes</button>
                         </div>
                     </div>
                 </div>
@@ -248,14 +239,28 @@
 
 
 
-
-
-
-
-
-
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-4">
+
+
+
+                    <button class="btn btn-dark btn-sm" ng-click="editField(field)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+
+
+                    <button class="btn btn-dark btn-sm" ng-click="removeField(field)">
+                        <i class="fa fa-code" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-dark btn-sm" ng-click="removeField(field)">
+                        <i class="fa fa-code-fork" aria-hidden="true"></i>
+                    </button>
+
+
+                    <button class="btn btn-dark btn-sm" ng-click="removeField(field)">
+                        <i class="fa fa-sort" aria-hidden="true"></i>
+                    </button>
+
+
+
                     <button class="btn btn-dark btn-sm" ng-click="removeField(field)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </div>
             </div>
@@ -292,6 +297,12 @@
                             </div>
                         </div>
                     </form>
+
+
+
+                    <pre>
+                           {{resource | json}}
+                    </pre>
 
 
                 </div>

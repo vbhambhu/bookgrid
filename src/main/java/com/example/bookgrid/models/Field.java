@@ -9,12 +9,11 @@ import java.util.List;
 public class Field {
 
     private int fieldId;
-
     private String type;
     private String identifier;
     private String label;
-    private String value;
     private String helpText = null;
+
     private List<Option> options = new ArrayList<>();
 
     public int getFieldId() {
@@ -47,14 +46,6 @@ public class Field {
 
     public void setLabel(String label) {
         this.label = label;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 
     public String getHelpText() {
