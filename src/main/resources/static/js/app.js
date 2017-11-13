@@ -60,6 +60,12 @@ app.controller("resourceDesign", function($scope, $http) {
 
     $scope.removeOption = function(field, option) {
         field.options.splice(field.options.indexOf(option), 1);
+
+        if(field.options.length == 0){
+            field.isOptionErr = true;
+        }
+
+
     }
 
     $scope.addOption = function(field) {
@@ -87,6 +93,9 @@ app.controller("resourceDesign", function($scope, $http) {
 
         field.options.push(option);
         field.option = {};
+
+        field.isOptionErr = false;
+
     }
 
 
@@ -135,7 +144,6 @@ app.controller("resourceDesign", function($scope, $http) {
 
         if(typeof newField.options == 'undefined' || newField.options.length == 0){
             newField.isOptionErr = true;
-            newField.optionErrMsg = 'Invalid identifier field. Minimum length 3 and alphanumeric is allowed.';
             return;
         }
 
