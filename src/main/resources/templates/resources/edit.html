@@ -51,12 +51,14 @@
                         </div>
                         <div class="modal-body">
 
-
+                    <pre>
+                           {{newField | json}}
+                    </pre>
 
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Type</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control form-control-sm" ng-model="newField.type" ng-init="newField.type='text'">
+                                    <select class="form-control form-control-sm" ng-model="newField.type">
                                         <option value="text">Free text</option>
                                         <option value="textarea">Textarea</option>
                                         <option value="radio">Radio Boxes - Single answer</option>
@@ -72,7 +74,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Label</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control form-control-sm" ng-model="newField.label" ng-init="newField.label='Field label'">
+                                    <input type="text" class="form-control form-control-sm" ng-model="newField.label">
                                 </div>
                             </div>
 
@@ -106,7 +108,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label">HTML content</label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control form-control-sm" rows="8"></textarea>
+                                        <textarea class="form-control form-control-sm" rows="8" ng-model="newField.label"></textarea>
                                     </div>
                                 </div>
 
@@ -271,7 +273,7 @@
 
 
 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add new field</button>
+            <button type="button" class="btn btn-primary" ng-click="addField()">Add new field</button>
 
             <br clear="both">
             <hr>

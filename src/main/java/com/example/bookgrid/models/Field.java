@@ -13,7 +13,6 @@ public class Field {
     private String identifier;
     private String label;
     private String helpText = null;
-    private String value;
 
     private List<Option> options = new ArrayList<>();
 
@@ -65,12 +64,4 @@ public class Field {
         this.options = options;
     }
 
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
 }

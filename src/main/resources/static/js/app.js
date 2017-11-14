@@ -118,13 +118,20 @@ app.controller("resourceDesign", function($scope, $http) {
 
 
     $scope.editField = function(field) {
-
         field.edit = true;
-
         console.log(field);
         $scope.newField = field;
         $('#exampleModal').modal('show');
+    }
 
+
+    $scope.addField = function() {
+
+        $scope.newField = {
+            type:'text',
+            label:'Field label'
+        };
+        $('#exampleModal').modal('show');
     }
 
 
@@ -133,16 +140,19 @@ app.controller("resourceDesign", function($scope, $http) {
 
     $scope.saveField = function(newField) {
 
-
-        if (typeof newField.identifier == 'undefined' || newField.identifier.length < 3 || !validateAlphanumeric(newField.identifier)){
+        if (newField.type != 'html' &&
+            (typeof newField.identifier == 'undefined' || newField.identifier.length < 3 || !validateAlphanumeric(newField.identifier))){
             newField.hasIdentfierError = true;
             newField.identifierErrMsg = 'Invalid identifier field. Minimum length 3 and alphanumeric is allowed.';
             return;
+        } else{
+            newField.hasIdentfierError = false;
         }
 
 
 
-        if(typeof newField.options == 'undefined' || newField.options.length == 0){
+        if( (newField.type == 'radio' || newField.type == 'select' || newField.type == 'check') &&
+            (typeof newField.options == 'undefined' || newField.options.length == 0)){
             newField.isOptionErr = true;
             return;
         }
@@ -180,6 +190,7 @@ app.controller("resourceDesign", function($scope, $http) {
 
             $scope.lastAddedID++;
             newField.fieldId = $scope.lastAddedID;
+            newField.value = null;
             $scope.resource.fields.push(newField);
         }
 
