@@ -1,11 +1,9 @@
 package com.example.bookgrid.controllers;
 
-import com.example.bookgrid.models.Field;
-import com.example.bookgrid.models.Resource;
+
 import com.example.bookgrid.repositories.ResourceRepository;
 import com.example.bookgrid.services.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,20 +17,18 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-    @Autowired
-    MongoOperations mongoOperation;
 
     @Autowired
     ResourceService resourceService;
 
-    @Autowired
-    ResourceRepository resourceRepository;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showHome(Model model){
 
-        model.addAttribute("resources", resourceService.getAllResources());
+        String jsFiles[] = {"moment.min.js", "fullcalendar.min.js"};
+
+        model.addAttribute("jsFiles",jsFiles);
 
         return "home";
     }

@@ -1,4 +1,21 @@
+// $('#calendar').fullCalendar({
+//     header: { center: 'month,agendaWeek' },
+//     defaultView: 'agendaWeek',
+//     dayClick: function(date, jsEvent, view, resourceObj) {
+//         $('#exampleModal').modal();
+//     }
+// });
+
+
+
+
+
 var app = angular.module("bookingGrid", []);
+
+app.controller("calender", function($scope, $http) {
+
+});
+
 
 
 app.controller("resourceList", function($scope, $http) {
@@ -9,7 +26,6 @@ app.controller("resourceList", function($scope, $http) {
             $scope.nameErr = true;
             return;
         }
-
 
         $http({
             method: 'POST',

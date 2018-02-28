@@ -1,27 +1,32 @@
 package com.example.bookgrid.models;
 
-import org.springframework.data.annotation.Id;
-
-import javax.annotation.Generated;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "fields")
 public class Field {
 
-    private int fieldId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private String type;
-    private String identifier;
+
     private String label;
+
     private String helpText = null;
 
-    private List<Option> options = new ArrayList<>();
+   //private List<Option> options = new ArrayList<>();
 
-    public int getFieldId() {
-        return fieldId;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setFieldId(int fieldId) {
-        this.fieldId = fieldId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getType() {
@@ -30,14 +35,6 @@ public class Field {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     public String getLabel() {
@@ -55,13 +52,4 @@ public class Field {
     public void setHelpText(String helpText) {
         this.helpText = helpText;
     }
-
-    public List<Option> getOptions() {
-        return options;
-    }
-
-    public void setOptions(List<Option> options) {
-        this.options = options;
-    }
-
 }
